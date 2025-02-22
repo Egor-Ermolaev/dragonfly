@@ -1,11 +1,12 @@
 package session
 
 import (
-	"github.com/df-mc/dragonfly/server/entity/effect"
 	"image/color"
 	"math/rand/v2"
 	"strings"
 	"time"
+
+	"github.com/df-mc/dragonfly/server/entity/effect"
 
 	"github.com/df-mc/dragonfly/server/block"
 	"github.com/df-mc/dragonfly/server/block/cube"
@@ -815,6 +816,8 @@ func (s *Session) playSound(pos mgl64.Vec3, t world.Sound, disableRelative bool)
 			EventType: packet.LevelEventSoundTotemUsed,
 			Position:  vec64To32(pos),
 		})
+	case sound.Shield:
+		pk.SoundType = packet.SoundEventShieldBlock
 	case sound.DecoratedPotInserted:
 		s.writePacket(&packet.PlaySound{
 			SoundName: "block.decorated_pot.insert",

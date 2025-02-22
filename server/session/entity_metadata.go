@@ -1,6 +1,9 @@
 package session
 
 import (
+	"math"
+	"time"
+
 	"github.com/df-mc/dragonfly/server/entity"
 	"github.com/df-mc/dragonfly/server/entity/effect"
 	"github.com/df-mc/dragonfly/server/internal/nbtconv"
@@ -10,8 +13,6 @@ import (
 	"github.com/go-gl/mathgl/mgl64"
 	"github.com/google/uuid"
 	"github.com/sandertv/gophertunnel/minecraft/protocol"
-	"math"
-	"time"
 )
 
 // parseEntityMetadata returns an entity metadata object with default values. It is equivalent to setting
@@ -44,6 +45,8 @@ func (s *Session) parseEntityMetadata(e world.Entity) protocol.EntityMetadata {
 func (s *Session) addSpecificMetadata(e any, m protocol.EntityMetadata) {
 	if sn, ok := e.(sneaker); ok && sn.Sneaking() {
 		m.SetFlag(protocol.EntityDataKeyFlags, protocol.EntityDataFlagSneaking)
+
+		// todo флаг DATA_FLAG_BLOCKING
 	}
 	if sp, ok := e.(sprinter); ok && sp.Sprinting() {
 		m.SetFlag(protocol.EntityDataKeyFlags, protocol.EntityDataFlagSprinting)
